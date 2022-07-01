@@ -1,12 +1,6 @@
 import socket
-import pickle
-
 
 class Server():
-    HOST = ""
-    PORT = 5000
-    PACKET_SIZE = 1024
-    socket = None
 
     def __init__(self, HOST, PORT, PACKET_SIZE) -> None:
         self.HOST = HOST
@@ -20,7 +14,18 @@ class Server():
         self.socket.listen()
 
         conn, adress = self.socket.accept()
+        
+        f = open("./server/hi.txt", "rb")
 
         with conn:
-            pass
+            chunk = f.read(1024)
+            while chunk:
+                conn.sendall(chunk)
+                chunk = f.read(1024)
+
+
+
+
+server = Server("192.168.188.51", 5000, 1024)
+server.startServer()
 
