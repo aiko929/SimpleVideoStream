@@ -9,8 +9,15 @@ PACKET_SIZE = 1024
 
 with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
     s.connect((HOST, PORT))
-    s.sendall(b"Hello, world")
+
+    f = open("./backend/test.txt", "wb")
     data = s.recv(PACKET_SIZE)
+    while data:
+        data = s.recv(PACKET_SIZE)
+        f.write(data)
+    f.close()
+
+    
 
 print(f"Received {data!r}")
 
@@ -23,6 +30,4 @@ print(f"Received {data!r}")
 
 # f = f.save("cat.png")
 
-f = open("./backend/test.txt", "wb")
-f.write(data)
-f.close()
+
